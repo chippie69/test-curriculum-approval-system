@@ -1,0 +1,14 @@
+# ถังขยะและโฟลเดอร์ติดตั้งของ Node.js
+node_modules/
+.next/
+dist/
+npm-debug.log*
+
+# ข้อมูลฐานข้อมูลของ Postgres (ห้ามเอาขึ้นเด็ดขาด ข้อมูลจะพังและหนักมาก)
+pgdata/
+.env
+.env.local
+
+# ไฟล์ระบบของ OS
+.DS_Store
+Thumbs.db

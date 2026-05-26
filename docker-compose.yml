@@ -1,0 +1,55 @@
+services:
+  postgres-db:
+    image: postgres:15-alpine
+    container_name: exam-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: exam_user
+      POSTGRES_PASSWORD: secretpassword
+      POSTGRES_DB: curriculum_db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init-db:/docker-entrypoint-initdb.d
+    networks: # 🌟 เชื่อมต่อเข้า Network ส่วนกลาง
+      - curriculum-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: exam-backend
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - DB_HOST=postgres-db
+      - DB_USER=exam_user
+      - DB_PASS=secretpassword
+      - DB_NAME=curriculum_db
+    depends_on:
+      - postgres-db
+    networks: # 🌟 เชื่อมต่อเข้า Network ส่วนกลาง
+      - curriculum-network
+
+  frontend-nextjs:
+    build:
+      context: ./frontend-nextjs  # ชี้ไปโฟลเดอร์ Next.js ตัวใหม่
+      dockerfile: Dockerfile
+    container_name: exam-frontend-nextjs
+    ports:
+      - "3000:3000"  # Next.js รันพอร์ต 3000 เป็นมาตรฐานอยู่แล้ว
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:5000
+    networks: # 🌟 เชื่อมต่อเข้า Network ส่วนกลาง
+      - curriculum-network
+
+# ==========================================
+# ส่วนประกาศตัวแปรระบบส่วนกลาง (ล่างสุดของไฟล์)
+# ==========================================
+volumes:
+  pgdata:
+
+networks: # 🌟 เพิ่มบล็อกนี้ลงไปเพื่อนิยาม Network ชื่อ curriculum-network ให้รู้จักทั้งระบบ
+  curriculum-network:
+    driver: bridge
