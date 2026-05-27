@@ -35,18 +35,19 @@ router.get('/courses/pending', async (req, res) => {
         // เขียน Query ดึงวิชาที่สถานะเป็น Pending Review ออกมาเรียงตามเวลาล่าสุด
         const sql = `
             SELECT 
-                id AS course_id, 
-                course_code, 
-                course_name_th, 
-                course_name_en, 
-                credits,
-                created_by,
-                'อาจารย์ สมชาย ใจดี' AS proposer_first_name, -- สมมติชื่ออาจารย์ไว้ก่อนชั่วคราว
-                '' AS proposer_last_name,
-                'somchai@university.ac.th' AS proposer_email
-            FROM courses 
-            WHERE status = 'Pending Review'
-            ORDER BY created_at DESC;
+                c.id AS course_id, 
+                c.course_code, 
+                c.course_name_th, 
+                c.course_name_en, 
+                c.credits,
+                c.created_by,
+                u.first_name AS proposer_first_name,
+                u.last_name AS proposer_last_name,
+                u.email AS proposer_email
+            FROM courses c
+            INNER JOIN users u ON c.created_by = u.id
+            WHERE c.status = 'Pending Review'
+            ORDER BY c.created_at DESC;
         `;
         
         const result = await pool.query(sql);

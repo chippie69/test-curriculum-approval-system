@@ -18,12 +18,12 @@ export default function Home() {
           </p>
         </header>
 
-        {/* ปุ่มเลือกบทบาท 2 ฝั่ง */}
+        {/* ปุ่มเลือกบทบาท 2 ฝั่ง (ปรับลิงก์ให้วิ่งไปที่หน้า /login) */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto pt-6">
           
-          {/* ปุ่มเข้าหน้าอาจารย์ */}
+          {/* ปุ่มเข้าหน้าอาจารย์ -> ปรับไปที่ /login */}
           <Link 
-            href="/teacher"
+            href="/login"
             className="group bg-slate-800/60 hover:bg-slate-800 border border-slate-700/80 hover:border-indigo-500/50 p-6 rounded-2xl text-left transition-all duration-300 hover:shadow-lg hover:shadow-indigo-500/10 flex flex-col justify-between min-h-[140px]"
           >
             <div>
@@ -40,9 +40,9 @@ export default function Home() {
             </div>
           </Link>
 
-          {/* ปุ่มเข้าหน้าเจ้าหน้าที่ */}
+          {/* ปุ่มเข้าหน้าเจ้าหน้าที่ -> ปรับไปที่ /login */}
           <Link 
-            href="/staff"
+            href="/login"
             className="group bg-slate-800/60 hover:bg-slate-800 border border-slate-700/80 hover:border-emerald-500/50 p-6 rounded-2xl text-left transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/10 flex flex-col justify-between min-h-[140px]"
           >
             <div>
